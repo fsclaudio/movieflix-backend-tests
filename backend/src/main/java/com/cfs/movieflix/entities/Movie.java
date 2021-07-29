@@ -1,8 +1,8 @@
 package com.cfs.movieflix.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +28,7 @@ public class Movie implements Serializable {
 	private String synopsis;
 	
 	@OneToMany(mappedBy = "movie")
-	private List<Review> reviews = new ArrayList<>();
+	private Set<Review> reviews = new  HashSet<>();
 	
 	@ManyToOne
 	@JoinColumn(name = "genre_id")
@@ -101,6 +101,14 @@ public class Movie implements Serializable {
 
 	public void setGenre(Genre genre) {
 		this.genre = genre;
+	}
+
+	public Set<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(Set<Review> reviews) {
+		this.reviews = reviews;
 	}
 
 	@Override

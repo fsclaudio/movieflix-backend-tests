@@ -34,6 +34,9 @@ public class UserService implements UserDetailsService {
 	private static Logger logger = org.slf4j.LoggerFactory.getLogger(UserService.class);
 	
 	@Autowired
+	private AuthService authService;
+	
+	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
@@ -41,6 +44,8 @@ public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private RoleRepository  rolerepository;
+	
+	
 	
 	@Transactional(readOnly = true)
 	public Page<UserDTO> findAllPaged(PageRequest pageRequest){
@@ -111,6 +116,13 @@ public class UserService implements UserDetailsService {
 			
 		}
 		
+	}
+	
+	@Transactional(readOnly = true)
+	public UserDTO getLoggedUser() {
+		User user = authService.authenticated();
+		
+		return new UserDTO(user);
 	}
 
 	@Override

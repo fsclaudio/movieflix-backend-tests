@@ -21,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import com.devsuperior.movieflix.dto.ReviewDTO;
-import com.devsuperior.movieflix.repositories.ReviewRepository;
+import com.cfs.movieflix.dto.ReviewDTO;
+import com.cfs.movieflix.repositories.ReviewRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
@@ -124,7 +124,7 @@ public class ReviewResourceIT {
 		
 		String accessToken = obtainAccessToken(memberUsername, memberPassword);
 		
-		newReviewDTO.setText("     ");
+		newReviewDTO.setText("  ");
 		String jsonBody = objectMapper.writeValueAsString(newReviewDTO);
 		
 		ResultActions result =

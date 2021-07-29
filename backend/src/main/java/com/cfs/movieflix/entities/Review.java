@@ -15,6 +15,8 @@ public class Review {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	
 	private String text;
 	
 	@ManyToOne
@@ -34,6 +36,7 @@ public class Review {
 		this.movie = movie;
 		this.user = user;
 	}
+	
 
 	public Long getId() {
 		return id;

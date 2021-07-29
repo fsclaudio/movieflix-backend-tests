@@ -1,13 +1,16 @@
 package com.cfs.movieflix.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.cfs.movieflix.entities.Genre;
 import com.cfs.movieflix.entities.Movie;
-import com.cfs.movieflix.entities.Role;
+import com.cfs.movieflix.entities.Review;
 
-public class MovieDTO {
+public class MovieDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 	private String title;
@@ -16,7 +19,9 @@ public class MovieDTO {
 	private String imgUrl;
 	private String synopsis;
 	
-	private List<RoleDTO> roles = new ArrayList<>();
+	private GenreDTO genre;
+	
+	private List<ReviewDTO> reviews = new ArrayList<>();
 	
 	public MovieDTO() {
 	}
@@ -31,19 +36,19 @@ public class MovieDTO {
 		this.synopsis = synopsis;
 	}
 	
-	public MovieDTO(Movie entity) {
+	public MovieDTO(Movie entity, Genre genre) {
 		id = entity.getId();
 		title = entity.getTitle();
 		subTitle = entity.getSubTitle();
 		year = entity.getYear();
 		imgUrl = entity.getImgUrl();
 		synopsis = entity.getSynopsis();
+		this.genre = new GenreDTO(genre);
 	}
 	
-
-	public MovieDTO(Movie entity, Set<Role> roles) {
-		this(entity);
-		roles.forEach(role -> this.roles.add(new RoleDTO(role)));
+	public MovieDTO(Movie entity,Genre genre , Set<Review> reviews) {
+		this(entity,genre);
+		reviews.forEach(cat -> this.reviews.add(new ReviewDTO(cat)));
 	}
 
 	public Long getId() {
@@ -94,13 +99,17 @@ public class MovieDTO {
 		this.synopsis = synopsis;
 	}
 
-	public List<RoleDTO> getRoles() {
-		return roles;
+	public GenreDTO getGenre() {
+		return genre;
 	}
 
-	public void setRoles(List<RoleDTO> roles) {
-		this.roles = roles;
+	public List<ReviewDTO> getReviews() {
+		return reviews;
 	}
-	
+
+	public void setReviews(List<ReviewDTO> reviews) {
+		this.reviews = reviews;
+	}
+
 	
 }

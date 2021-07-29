@@ -24,7 +24,7 @@ import org.springframework.util.MultiValueMap;
 
 import com.cfs.movieflix.dto.MovieDTO;
 import com.cfs.movieflix.repositories.MovieRepository;
-import com.devsuperior.movieflix.dto.ReviewDTO;
+import com.cfs.movieflix.dto.ReviewDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -77,6 +77,7 @@ public class MovieResourceIT {
 
 		ResultActions result =
 				mockMvc.perform(get("/movies/{id}", existingId)
+						.header("Authorization", "Bearer " + "")	
 					.contentType(MediaType.APPLICATION_JSON));
 
 		result.andExpect(status().isUnauthorized());
@@ -93,7 +94,7 @@ public class MovieResourceIT {
 					.contentType(MediaType.APPLICATION_JSON));
 
 		result.andExpect(status().isOk());
-		result.andExpect(jsonPath("$.reviews").exists());
+		result.andExpect(jsonPath("$.reviews").exists()); // MovieDTO -> List<ReviewDTO> reviews
 		Assertions.assertTrue(getReviews(result).length >= 0);
 	}
 
@@ -130,6 +131,7 @@ public class MovieResourceIT {
 
 		ResultActions result =
 				mockMvc.perform(get("/movies")
+					.header("Authorization", "Bearer " + "")	
 					.contentType(MediaType.APPLICATION_JSON));
 
 		result.andExpect(status().isUnauthorized());
@@ -210,7 +212,7 @@ public class MovieResourceIT {
 	
 	private boolean allMoviesGenresMatch(MovieDTO[] movies, long genreId) {
 		for (MovieDTO movie : movies) {
-			if (movie.getGenreId() != genreId) { // MovieDTO -> Long genreId
+			if (movie.getGenre().getId() != genreId) { // MovieDTO -> Long genreId
 				return false;
 			}
 		}
